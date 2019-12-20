@@ -4,13 +4,14 @@ import time
 options = webdriver.ChromeOptions()
 options.add_argument("headless")
 options.add_argument('window-size=1920x1080')
-browser = webdriver.Chrome(executable_path='chromedriver.exe' , chrome_options=options)
+browser = webdriver.Chrome(executable_path='chromedriver' , chrome_options=options)
 browser.get('https://store.steampowered.com/')
 cookie = {'name' : 'sessionId' , 'value' : '...'}
 cookie2 = {'name' : 'steamLoginSecure', 'value' : '...'}
 browser.add_cookie(cookie)
 browser.add_cookie(cookie2)
 browser.get('https://store.steampowered.com/')
+browser.execute_script("window.scrollTo(0,document.body.scrollHeight)")
 try:
 	browser.find_element_by_id("discovery_queue_start_link").click()
 except:
