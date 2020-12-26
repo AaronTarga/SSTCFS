@@ -6,13 +6,15 @@ Download and use chrome driver or geckodriver as instructed in the documentation
 
 Then you need to change some things in the file:
 Set the value of the cookies in the config.yml file by copying cookies while signed in, in the browser. You can do that with the firefox or chrome web developer tools. But it's more convenient if you use a plugin like [Cookie Editor](https://addons.mozilla.org/de/firefox/addon/cookie-editor/).
-After that you can start your script by executing it like a normal python script `python steamv2.py`.
+After that you can start your script by executing it like a normal python script `python steamv2.py`. (You can use multiple accounts as shown in the example).
 
 Example config.yml:
 ```yaml
 steam:
-  sessionId: some_sesssionId
-  steamLoginSecure: some_steamLoginSecure
+  - sessionId: first_sessionId
+    steamLoginSecure: first_steamLoginSecure
+  - sessionId: second_sessionId
+    steamLoginSecure: second_steamLoginSecure
 
 loops:
   first: 1
