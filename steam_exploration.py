@@ -34,7 +34,9 @@ def explore_list(sessionId, steamLoginSecure, options, first, second):
 					try:
 						browser.find_element_by_class_name('refresh_queue_btn').click()
 					except:
-						print('error')
+						print("Some error happened. Retrying after 1 sec.")
+						sleep(1)
+						
 		i += 1
 
 	browser.close()
