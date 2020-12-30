@@ -2,7 +2,7 @@ from selenium import webdriver
 import time
 import yaml
 
-def explore_list(sessionId, steamLoginSecure, options, first, second):
+def explore_list(sessionId, steamLoginSecure, options, first, second) -> bool:
 
 	cookie = {'name' : 'sessionId' , 'value' : sessionId }
 	cookie2 = {'name' : 'steamLoginSecure', 'value' : steamLoginSecure }
@@ -17,7 +17,11 @@ def explore_list(sessionId, steamLoginSecure, options, first, second):
 	try:
 		browser.find_element_by_id("discovery_queue_start_link").click()
 	except:
-		browser.find_element_by_class_name('discover_queue_empty_refresh_btn').click()
+		try:
+			browser.find_element_by_class_name('discover_queue_empty_refresh_btn').click()
+		except:
+			return False
+		
 
 	i = 0
 	j = 0
@@ -40,6 +44,7 @@ def explore_list(sessionId, steamLoginSecure, options, first, second):
 		i += 1
 
 	browser.close()
+	return True
 
 def main():
 
@@ -54,8 +59,11 @@ def main():
 	second = cfg['loops']['second']
 
 	for num,account in enumerate(cfg['steam']):
-		explore_list(account['sessionId'], account['steamLoginSecure'], options, first, second)
-		print(f'finished account {num}')
+
+		res = explore_list(account['sessionId'], account['steamLoginSecure'], options, first, second)
+
+		print(f'Finished account {num}!') if res else print(f'Cookie invalid or some network error. Could not begin account {num}.')
+		
 
 if __name__ == "__main__":
     main()
