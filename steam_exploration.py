@@ -20,6 +20,7 @@ def explore_list(sessionId, steamLoginSecure, options, first, second) -> bool:
 		try:
 			browser.find_element_by_class_name('discover_queue_empty_refresh_btn').click()
 		except:
+			browser.close()
 			return False
 		
 
