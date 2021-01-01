@@ -18,7 +18,7 @@ steam:
 
 loops:
   first: 1 # can be increased to click through multiple lists
-  second: 13 # should be 13 to exactly click through one list
+  second: 12 # should be 12 to exactly click through one list
 ```
 
 

@@ -34,13 +34,18 @@ def explore_list(sessionId, steamLoginSecure, options, first, second) -> bool:
 				browser.find_element_by_class_name('btn_next_in_queue').click()
 				j += 1
 			except:
-				browser.find_element_by_class_name('refresh_queue_btn').click()
-				retries += 1
-				if retries > 3:
-					print("Too many errors when clicking through list!")
-					return False
-				print("Some error happened. Retrying after 5 sec.")
-				time.sleep(5)
+				try:
+					browser.find_element_by_class_name('discover_queue_empty_refresh_btn').click()
+				except:
+					try:
+						browser.find_element_by_class_name('refresh_queue_btn').click()
+					except:
+						retries += 1
+						if retries > 3:
+							print("Too many errors when clicking through list!")
+							return False
+						print("Some error happened. Retrying after 5 sec.")
+						time.sleep(1)
 
 		i += 1
 
