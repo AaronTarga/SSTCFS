@@ -21,27 +21,27 @@ def explore_list(sessionId, steamLoginSecure, options, first, second) -> bool:
 			browser.find_element_by_class_name('discover_queue_empty_refresh_btn').click()
 		except:
 			browser.close()
+			print("Invalid Cookie or some network error! (Cookie could be invalid => need to replace with new one)")
 			return False
-		
 
 	i = 0
 	j = 0
-
+	
 	while i < first:
-		while j < second:
+		retries = 0
+		while j <= second:
 			try:
 				browser.find_element_by_class_name('btn_next_in_queue').click()
 				j += 1
 			except:
-				try:
-					browser.find_element_by_class_name('discover_queue_empty_refresh_btn').click()
-				except:
-					try:
-						browser.find_element_by_class_name('refresh_queue_btn').click()
-					except:
-						print("Some error happened. Retrying after 1 sec.")
-						time.sleep(1)
-						
+				browser.find_element_by_class_name('refresh_queue_btn').click()
+				retries += 1
+				if retries > 3:
+					print("Too many errors when clicking through list!")
+					return False
+				print("Some error happened. Retrying after 5 sec.")
+				time.sleep(5)
+
 		i += 1
 
 	browser.close()
@@ -54,7 +54,6 @@ def main():
 
 	options = webdriver.FirefoxOptions()
 	options.add_argument('--headless')
-	options.add_argument('window-size=1920x1080')
 
 	first = cfg['loops']['first']
 	second = cfg['loops']['second']
@@ -63,8 +62,8 @@ def main():
 
 		res = explore_list(account['sessionId'], account['steamLoginSecure'], options, first, second)
 
-		print(f'Finished account {num}!') if res else print(f'Cookie invalid or some network error. Could not begin account {num}.')
-		
+		if res:
+			print(f'Finished account {num}!')
 
 if __name__ == "__main__":
     main()
