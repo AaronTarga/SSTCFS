@@ -43,6 +43,7 @@ def explore_list(sessionId, steamLoginSecure, options, first, second) -> bool:
 						retries += 1
 						if retries > 3:
 							print("Too many errors when clicking through list!")
+							browser.close()
 							return False
 						print("Some error happened. Retrying after 5 sec.")
 						time.sleep(1)
